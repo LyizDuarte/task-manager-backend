@@ -1,11 +1,11 @@
 const TaskModel = require("../models/taskModel.js")
 
 class TaskController {
-  async index(req, res) {
+  async getTasks(req, res) {
     const tasks = await TaskModel.find({})
     res.status(200).send(tasks)
   }
-  async indexById(req, res) {
+  async getTasksById(req, res) {
     try {
       const taskId = req.params.id
       const task = await TaskModel.findById(taskId)
@@ -19,7 +19,7 @@ class TaskController {
     }
   }
 
-  async store(req, res) {
+  async createTask(req, res) {
     try {
       const newTask = new TaskModel(req.body)
       await newTask.save()
@@ -29,7 +29,7 @@ class TaskController {
     }
   }
 
-  async update(req, res) {
+  async updateTask(req, res) {
     try {
       const taskId = req.params.id
       const taskData = req.body
@@ -50,7 +50,7 @@ class TaskController {
     }
   }
 
-  async delete(req, res) {
+  async deleteTask(req, res) {
     try {
       const taskId = req.params.id
       const deletedTask = await TaskModel.findByIdAndDelete(taskId)

@@ -4,10 +4,10 @@ const TaskCtrl = new TaskController()
 
 const router = express.Router()
 
-router.get("/", TaskCtrl.index)
-router.get("/:id", TaskCtrl.indexById)
-router.post("/", TaskCtrl.store)
-router.delete("/:id", TaskCtrl.delete)
-router.patch("/:id", TaskCtrl.update)
+router.get("/", TaskCtrl.getTasks)
+router.get("/:id", TaskCtrl.getTasksById)
+router.post("/", TaskCtrl.createTask)
+router.delete("/:id", TaskCtrl.deleteTask)
+router.patch("/:id", TaskCtrl.updateTask)
 
 module.exports = router
