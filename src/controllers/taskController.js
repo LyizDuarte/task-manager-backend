@@ -1,5 +1,6 @@
 const TaskModel = require("../models/taskModel.js")
 const { notFoundError } = require("../errors/mongoDbErrors")
+const { notAllowedFieldsToUpdateError } = require("../errors/generalErros")
 
 class TaskController {
   async getTasks(req, res) {
@@ -44,7 +45,7 @@ class TaskController {
         if (allowedUpdates.includes(update)) {
           taskToUpdate[update] = taskData[update]
         } else {
-          return res.status(400).send("Update not allowed")
+          return notAllowedFieldsToUpdateError(res)
         }
       }
       await taskToUpdate.save()
