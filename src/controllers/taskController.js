@@ -1,4 +1,5 @@
 const TaskModel = require("../models/taskModel.js")
+const { notFoundError } = require("../errors/mongoDbErrors")
 
 class TaskController {
   async getTasks(req, res) {
@@ -10,7 +11,7 @@ class TaskController {
       const taskId = req.params.id
       const task = await TaskModel.findById(taskId)
       if (!task) {
-        res.status(404).send("Task not found")
+        return notFoundError(res)
       } else {
         return res.status(200).send(task)
       }
@@ -34,6 +35,9 @@ class TaskController {
       const taskId = req.params.id
       const taskData = req.body
       const taskToUpdate = await TaskModel.findById(taskId)
+      if (!taskToUpdate) {
+        return notFoundError(res)
+      }
       const allowedUpdates = ["isCompleted"]
       const requestedUpdates = Object.keys(taskData)
       for (const update of requestedUpdates) {
@@ -53,6 +57,10 @@ class TaskController {
   async deleteTask(req, res) {
     try {
       const taskId = req.params.id
+      const taskToDelete = await TaskModel.findById(taskId)
+      if (!taskToDelete) {
+        return notFoundError(res)
+      }
       const deletedTask = await TaskModel.findByIdAndDelete(taskId)
       res.status(200).send(deletedTask)
     } catch (error) {
