@@ -2,4 +2,8 @@ const notFoundError = (res) => {
   return res.status(404).send("Not Found data in database")
 }
 
-module.exports = { notFoundError }
+const objectIdCastError = (res) => {
+  return res.status(500).send("Invalid ID")
+}
+
+module.exports = { notFoundError, objectIdCastError }
